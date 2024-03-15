@@ -35,7 +35,8 @@ fun ErrorLoadingNewsListScreen(
             )
             Text(
                 text = newsUiState.e.toString()
-                    .replace(": ", ": \n\t"),
+                    .replace(": ", ":\n\t")
+                    .replace(";", ";\n"),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier

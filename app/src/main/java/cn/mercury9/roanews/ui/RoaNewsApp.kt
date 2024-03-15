@@ -39,8 +39,9 @@ fun RoaNewsApp() {
             )
             HomeScreen(
                 newsUiState = newsViewModel.newsUiState,
-                onRefreshNewsList = { newsViewModel.loadNewsList() },
-                onRefreshNewsContent = { target: String -> newsViewModel.getNewsContent(target) })
+                curlNewsContent = "",
+                refreshNewsList = { newsViewModel.loadNewsList() },
+                refreshNewsContent = { target: String -> newsViewModel.getNewsContent(target) })
         }
     }
 }
