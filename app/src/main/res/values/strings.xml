@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Roa News</string>
+    <string name="news_list_screen_loading">Loading news list …</string>
 </resources>
