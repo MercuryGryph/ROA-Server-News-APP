@@ -1,7 +1,10 @@
 package cn.mercury9.roanews.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -14,49 +17,65 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cn.mercury9.roanews.R
 import cn.mercury9.roanews.ui.screen.HomeScreen
 import cn.mercury9.roanews.ui.screen.NewsViewModel
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoaNewsApp() {
-    val scoreBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scoreBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         modifier = Modifier
             .nestedScroll(scoreBehavior.nestedScrollConnection),
         topBar = {
-            RoaNewsTopBar(scrollBehavior = scoreBehavior)
+            RoaNewsTopBar(scrollBehavior = null)
         }
     ) {
         Surface(
             color = MaterialTheme.colorScheme.background,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 70.dp)
         ) {
             val newsViewModel: NewsViewModel = viewModel(
                 factory = NewsViewModel.Factory
             )
             HomeScreen(
                 newsUiState = newsViewModel.newsUiState,
-                curlNewsContent = "",
-                refreshNewsList = { newsViewModel.loadNewsList() },
-                refreshNewsContent = { target: String -> newsViewModel.getNewsContent(target) })
+                refreshNewsList = { refreshState: SwipeRefreshState ->
+                    Log.i(null, "Refresh News List")
+                    newsViewModel.loadNewsList(refreshState)
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+            )
         }
     }
 }
 
+@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RoaNewsTopBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
+fun RoaNewsTopBar(
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null
+) {
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         modifier = modifier,
         title = {
             Text(
                 text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.headlineMedium
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier
+                    .wrapContentSize()
             )
         }
     )

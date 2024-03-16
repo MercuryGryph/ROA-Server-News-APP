@@ -6,6 +6,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import cn.mercury9.roanews.data.model.NewsInfo
@@ -14,14 +18,13 @@ import cn.mercury9.roanews.ui.screen.newslist.LoadingNewsListScreen
 import cn.mercury9.roanews.ui.screen.newslist.NewsListScreen
 import cn.mercury9.roanews.ui.theme.RoaNewsTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeScreen(
     newsUiState: NewsUiState,
-    curlNewsContent: String,
-    refreshNewsList: () -> Unit,
-    refreshNewsContent: (String) -> Unit,
+    refreshNewsList: (SwipeRefreshState) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val refreshState = rememberSwipeRefreshState(isRefreshing = false)
@@ -30,15 +33,8 @@ fun HomeScreen(
     SwipeRefresh(
         state = refreshState,
         onRefresh = {
-            when {
-                (newsUiState is NewsUiState.SuccessLoadNewsList ||
-                newsUiState is NewsUiState.ErrorLoadingNewsList)
-                        -> refreshNewsList()
-                (newsUiState is NewsUiState.SuccessLoadNewsContent ||
-                newsUiState is NewsUiState.ErrorLoadingNewsContent)
-                        -> refreshNewsContent(curlNewsContent)
-                else -> {}
-            }
+            refreshState.isRefreshing = true
+            refreshNewsList(refreshState)
         }
     ) {
         when (newsUiState) {
@@ -50,6 +46,7 @@ fun HomeScreen(
             NewsUiState.LoadingNewsList ->
                 LoadingNewsListScreen(
                     modifier = modifier
+                        .verticalScroll(scrollState)
                 )
             is NewsUiState.ErrorLoadingNewsList ->
                 ErrorLoadingNewsListScreen(
@@ -57,14 +54,8 @@ fun HomeScreen(
                     modifier = modifier
                         .verticalScroll(scrollState)
                 )
-
-            is NewsUiState.SuccessLoadNewsContent -> TODO()
-            NewsUiState.LoadingNewsContent -> TODO()
-            is NewsUiState.ErrorLoadingNewsContent -> TODO()
         }
-        
     }
-
 }
 
 @Preview
@@ -76,15 +67,22 @@ fun PreviewHomeScreen() {
         newsList += NewsInfo("News $i", "")
     }
 
+    val newsUiStateSuccess = NewsUiState.SuccessLoadNewsList(newsList)
+    val newsUiStateError = NewsUiState.ErrorLoadingNewsList(Exception("error"))
+
+    var newsUiState: NewsUiState by remember {
+        mutableStateOf(newsUiStateError)
+    }
+
     RoaNewsTheme {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
             HomeScreen(
-                newsUiState = NewsUiState.SuccessLoadNewsList(newsList),
-                curlNewsContent = "",
-                refreshNewsList = {},
-                refreshNewsContent = {},
+                newsUiState = newsUiState,
+                refreshNewsList = {
+                    newsUiState = newsUiStateSuccess
+                },
                 modifier = Modifier
                     .fillMaxSize()
             )

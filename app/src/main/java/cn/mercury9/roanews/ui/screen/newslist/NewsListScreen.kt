@@ -1,7 +1,6 @@
 package cn.mercury9.roanews.ui.screen.newslist
 
 import android.content.res.Configuration
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -33,6 +32,7 @@ fun NewsListScreen(
                 newsInfo = newsInfo,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(8.dp)
             )
         }
     }
@@ -44,14 +44,15 @@ fun NewsInfoRow(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.surface,
+        color = MaterialTheme.colorScheme.primaryContainer,
+        shape = MaterialTheme.shapes.medium,
+        shadowElevation = 6.dp,
         modifier = modifier
-            .border(1.dp, MaterialTheme.colorScheme.outline)
             .heightIn(50.dp)
     ) {
         Text(
             text = newsInfo.title,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .padding(8.dp)
@@ -74,7 +75,7 @@ fun PreviewNewsInfoRow() {
 
 @Preview(
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
     locale = "zh"
 )
 @Composable
