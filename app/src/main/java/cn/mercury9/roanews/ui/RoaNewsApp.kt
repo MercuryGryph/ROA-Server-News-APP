@@ -32,6 +32,7 @@ fun RoaNewsApp() {
         }
     ) {
         Surface(
+            color = MaterialTheme.colorScheme.background,
             modifier = Modifier.fillMaxSize()
         ) {
             val newsViewModel: NewsViewModel = viewModel(
