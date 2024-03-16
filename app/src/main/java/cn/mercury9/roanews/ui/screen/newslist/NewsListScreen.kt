@@ -46,7 +46,7 @@ fun NewsInfoRow(
         color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.medium,
         shadowElevation = 6.dp,
-        tonalElevation = 6.dp,
+//        tonalElevation = 6.dp,
         modifier = modifier
     ) {
         Text(
@@ -74,6 +74,7 @@ fun PreviewNewsInfoRow() {
 }
 
 @Preview(
+    showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO,
     locale = "zh"
 )

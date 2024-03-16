@@ -3,6 +3,8 @@ package cn.mercury9.roanews.ui.screen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,13 +77,18 @@ fun PreviewHomeScreen() {
     }
 
     RoaNewsTheme {
-        HomeScreen(
-            newsUiState = NewsUiState.SuccessLoadNewsList(newsList),
-            curlNewsContent = "",
-            refreshNewsList = {},
-            refreshNewsContent = {},
-            modifier = Modifier
-                .fillMaxSize()
-        )
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
+            HomeScreen(
+                newsUiState = NewsUiState.SuccessLoadNewsList(newsList),
+                curlNewsContent = "",
+                refreshNewsList = {},
+                refreshNewsContent = {},
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+
+        }
     }
 }
