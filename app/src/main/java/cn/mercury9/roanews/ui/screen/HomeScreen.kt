@@ -72,7 +72,7 @@ fun HomeScreen(
 fun PreviewHomeScreen() {
 
     val newsList: MutableList<NewsInfo> = mutableListOf()
-    for (i in 1..20) {
+    for (i in 1..10) {
         newsList += NewsInfo("News $i", "")
     }
 

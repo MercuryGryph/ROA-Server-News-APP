@@ -1,8 +1,10 @@
 package cn.mercury9.roanews.ui.screen.newslist
 
 import android.content.res.Configuration
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,7 +33,6 @@ fun NewsListScreen(
                 newsInfo = newsInfo,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
             )
         }
     }
@@ -44,10 +45,9 @@ fun NewsInfoRow(
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surface,
-        shape = MaterialTheme.shapes.medium,
-        shadowElevation = 6.dp,
-//        tonalElevation = 6.dp,
         modifier = modifier
+            .border(1.dp, MaterialTheme.colorScheme.outline)
+            .heightIn(50.dp)
     ) {
         Text(
             text = newsInfo.title,
@@ -66,7 +66,6 @@ fun PreviewNewsInfoRow() {
         NewsInfoRow(
             newsInfo = NewsInfo("News 1", ""),
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxWidth()
                 .wrapContentHeight()
         )
@@ -75,20 +74,24 @@ fun PreviewNewsInfoRow() {
 
 @Preview(
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
     locale = "zh"
 )
 @Composable
 fun PreviewNewsListScreen() {
     val newsList: MutableList<NewsInfo> = mutableListOf()
-    for (i in 1..20) {
+    for (i in 1..10) {
         newsList += NewsInfo("News $i", "")
     }
     RoaNewsTheme {
-        NewsListScreen(
-            newsUiState = NewsUiState.SuccessLoadNewsList(newsList),
-            modifier = Modifier
-                .fillMaxSize()
-        )
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
+            NewsListScreen(
+                newsUiState = NewsUiState.SuccessLoadNewsList(newsList),
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+        }
     }
 }
