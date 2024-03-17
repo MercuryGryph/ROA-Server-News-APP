@@ -44,11 +44,11 @@ class NewsViewModel(
 
     init {
         newsUiState = NewsUiState.LoadingNewsList
-//        try {
-//            loadNewsList()
-//        } catch (e: Exception) {
-//            newsUiState = NewsUiState.ErrorLoadingNewsList(e)
-//        }
+        try {
+            loadNewsList()
+        } catch (e: Exception) {
+            newsUiState = NewsUiState.ErrorLoadingNewsList(e)
+        }
     }
 
     fun loadNewsList(refreshState: SwipeRefreshState? = null) {
