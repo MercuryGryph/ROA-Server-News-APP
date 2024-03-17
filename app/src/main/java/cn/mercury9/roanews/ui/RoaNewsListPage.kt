@@ -19,8 +19,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import cn.mercury9.roanews.R
+import cn.mercury9.roanews.RouteConfig
+import cn.mercury9.roanews.data.model.NewsInfo
 import cn.mercury9.roanews.ui.screen.HomeScreen
 import cn.mercury9.roanews.ui.screen.NewsViewModel
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -28,11 +30,11 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RoaNewsApp() {
+fun RoaNewsListPage(
+    navController: NavController,
+    newsViewModel: NewsViewModel
+) {
     val scoreBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val newsViewModel: NewsViewModel = viewModel(
-        factory = NewsViewModel.Factory
-    )
     Scaffold(
         modifier = Modifier
             .nestedScroll(scoreBehavior.nestedScrollConnection),
@@ -52,8 +54,9 @@ fun RoaNewsApp() {
                     Log.i(null, "Refresh News List")
                     newsViewModel.loadNewsList(refreshState)
                 },
-                onClickNews = {target: String ->
+                onClickNews = {target: NewsInfo ->
                     newsViewModel.setNewsContentTarget(target)
+                    navController.navigate(RouteConfig.ROUTE_NEWS_CONTENT_PAGE)
                 },
                 modifier = Modifier
                     .fillMaxSize()
@@ -70,12 +73,18 @@ fun RoaNewsTopBar(
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     CenterAlignedTopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.onPrimary,
+            MaterialTheme.colorScheme.onPrimary,
+            MaterialTheme.colorScheme.onPrimary
+        ),
         scrollBehavior = scrollBehavior,
         modifier = modifier,
         title = {
             Text(
                 text = stringResource(id = R.string.app_name),
-                color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier
                     .wrapContentSize()

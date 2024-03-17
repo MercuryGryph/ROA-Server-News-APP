@@ -23,7 +23,7 @@ import cn.mercury9.roanews.ui.theme.RoaNewsTheme
 @Composable
 fun NewsListScreen(
     newsUiState: NewsUiState.SuccessLoadNewsList,
-    onClickNews: (String) -> Unit,
+    onClickNews: (NewsInfo) -> Unit,
     modifier: Modifier
 ) {
     LazyColumn(
@@ -35,7 +35,7 @@ fun NewsListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-            ) { target: String ->
+            ) { target: NewsInfo ->
                 onClickNews(target)
             }
         }
@@ -46,7 +46,7 @@ fun NewsListScreen(
 fun NewsInfoRow(
     newsInfo: NewsInfo,
     modifier: Modifier = Modifier,
-    onClick: (String) -> Unit
+    onClick: (NewsInfo) -> Unit
 ) {
     Surface(
         color = MaterialTheme.colorScheme.primaryContainer,
@@ -55,7 +55,7 @@ fun NewsInfoRow(
         modifier = modifier
             .heightIn(50.dp)
             .clickable {
-                onClick(newsInfo.href)
+                onClick(newsInfo)
             }
     ) {
         Text(

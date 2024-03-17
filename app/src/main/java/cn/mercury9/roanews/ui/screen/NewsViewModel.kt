@@ -69,8 +69,12 @@ class NewsViewModel(
         }
     }
 
-    fun setNewsContentTarget(target: String) {
+    fun setNewsContentTarget(target: NewsInfo) {
         application.curlNewsContent = target
+    }
+
+    fun getNewsContentTarget(): NewsInfo {
+        return application.curlNewsContent
     }
 
     fun getNewsContent(target: String) {

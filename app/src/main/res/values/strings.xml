@@ -3,4 +3,5 @@
     <string name="loading_news_list">Loading news list …</string>
     <string name="fail_load_news_list">Failed to load news list:</string>
     <string name="title_activity_news_content">NewsContentActivity</string>
+    <string name="back">Back</string>
 </resources>

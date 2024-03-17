@@ -3,4 +3,6 @@
     <string name="app_name">元点新闻</string>
     <string name="loading_news_list">正在加载新闻列表…</string>
     <string name="fail_load_news_list">加载新闻列表失败：</string>
+    <string name="title_activity_news_content">新闻内容活动</string>
+    <string name="back">返回</string>
 </resources>
