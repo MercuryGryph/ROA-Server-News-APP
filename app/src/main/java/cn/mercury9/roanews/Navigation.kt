@@ -5,9 +5,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import cn.mercury9.roanews.data.NewsViewModel
 import cn.mercury9.roanews.ui.RoaNewsContentPage
 import cn.mercury9.roanews.ui.RoaNewsListPage
-import cn.mercury9.roanews.ui.screen.NewsViewModel
 
 object RouteConfig {
     const val ROUTE_NEWS_LIST_PAGE = "NewsListPage"

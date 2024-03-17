@@ -9,7 +9,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -22,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import cn.mercury9.roanews.R
 import cn.mercury9.roanews.RouteConfig
+import cn.mercury9.roanews.data.NewsViewModel
 import cn.mercury9.roanews.data.model.NewsInfo
 import cn.mercury9.roanews.ui.screen.HomeScreen
-import cn.mercury9.roanews.ui.screen.NewsViewModel
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -42,26 +41,20 @@ fun RoaNewsListPage(
             RoaNewsTopBar(scrollBehavior = null)
         }
     ) {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        HomeScreen(
+            newsUiState = newsViewModel.newsUiState,
+            refreshNewsList = { refreshState: SwipeRefreshState ->
+                Log.i(null, "Refresh News List")
+                newsViewModel.loadNewsList(refreshState)
+            },
+            onClickNews = {target: NewsInfo ->
+                newsViewModel.setNewsContentTarget(target)
+                navController.navigate(RouteConfig.ROUTE_NEWS_CONTENT_PAGE)
+            },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 70.dp)
-        ) {
-            HomeScreen(
-                newsUiState = newsViewModel.newsUiState,
-                refreshNewsList = { refreshState: SwipeRefreshState ->
-                    Log.i(null, "Refresh News List")
-                    newsViewModel.loadNewsList(refreshState)
-                },
-                onClickNews = {target: NewsInfo ->
-                    newsViewModel.setNewsContentTarget(target)
-                    navController.navigate(RouteConfig.ROUTE_NEWS_CONTENT_PAGE)
-                },
-                modifier = Modifier
-                    .fillMaxSize()
-            )
-        }
+                .padding(top = 60.dp)
+        )
     }
 }
 

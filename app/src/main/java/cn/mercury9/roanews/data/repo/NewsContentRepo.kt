@@ -1,10 +1,9 @@
 package cn.mercury9.roanews.data.repo
 
-import cn.mercury9.roanews.data.model.NewsInfo
+import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import kotlinx.serialization.json.Json
 
 interface NewsContentRepo {
     suspend fun getNewsContent(target: String): String
@@ -17,7 +16,8 @@ class NetworkNewsContentRepo(
     override suspend fun getNewsContent(target: String): String {
         val response = client.get("$url$target.md")
         if (response.status.value != 200) {
-            throw Error()
+            Log.e("load_data NetworkNewsContentRepo", "Loading News Failed: Response code ${response.status.value}")
+            throw Error("Loading News Failed: Response code ${response.status.value}; ${response.bodyAsText()}")
         }
         return response.bodyAsText()
     }

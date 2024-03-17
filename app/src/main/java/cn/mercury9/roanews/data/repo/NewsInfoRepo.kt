@@ -20,7 +20,7 @@ class NetworkNewsInfoRepo(
         val response = client.get(url)
         if (response.status.value != 200) {
             Log.e("load_data NetworkNewsInfoRepo", "Loading News List Failed: Response code ${response.status.value}")
-            throw Error()
+            throw Error("Loading News List Failed: Response code ${response.status.value}")
         }
         val responseBody = response.bodyAsText()
         Log.i("load_data NetworkNewsInfoRepo", "Successful load News List from $url")

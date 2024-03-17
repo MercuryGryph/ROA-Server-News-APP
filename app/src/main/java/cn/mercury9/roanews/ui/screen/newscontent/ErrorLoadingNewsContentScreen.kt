@@ -1,27 +1,25 @@
-package cn.mercury9.roanews.ui.screen.newslist
+package cn.mercury9.roanews.ui.screen.newscontent
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import cn.mercury9.roanews.R
-import cn.mercury9.roanews.data.NewsUiState
-import cn.mercury9.roanews.ui.theme.RoaNewsTheme
+import cn.mercury9.roanews.data.NewsContentState
+import cn.mercury9.roanews.data.model.NewsInfo
 
 @Composable
-fun ErrorLoadingNewsListScreen(
-    newsUiState: NewsUiState.ErrorLoadingNewsList,
+fun ErrorLoadingNewsContentScreen(
+    newsContentState: NewsContentState.ErrorLoadingNewsContent,
+    target: NewsInfo,
     modifier: Modifier = Modifier
 ) {
     Surface(
+        color = MaterialTheme.colorScheme.background,
         modifier = modifier
     ) {
         Column(
@@ -29,14 +27,14 @@ fun ErrorLoadingNewsListScreen(
                 .wrapContentSize()
         ) {
             Text(
-                text = stringResource(id = R.string.fail_load_news_list),
+                text = stringResource(id = R.string.fail_load_news_content).format(target.title),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .wrapContentSize()
             )
             Text(
-                text = newsUiState.e.toString()
+                text = newsContentState.e.toString()
                     .replace(": ", ":\n\t")
                     .replace(";", ";\n"),
                 style = MaterialTheme.typography.bodyMedium,
@@ -45,21 +43,5 @@ fun ErrorLoadingNewsListScreen(
                     .wrapContentSize()
             )
         }
-    }
-}
-
-@Preview(
-    locale = ""
-)
-@Composable
-fun PreviewErrorLoadingNewsListScreen() {
-    val scrollState = rememberScrollState()
-    RoaNewsTheme {
-        ErrorLoadingNewsListScreen(
-            newsUiState = NewsUiState.ErrorLoadingNewsList(Exception("error")),
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-        )
     }
 }

@@ -16,8 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import cn.mercury9.roanews.data.NewsUiState
 import cn.mercury9.roanews.data.model.NewsInfo
-import cn.mercury9.roanews.ui.screen.NewsUiState
 import cn.mercury9.roanews.ui.theme.RoaNewsTheme
 
 @Composable

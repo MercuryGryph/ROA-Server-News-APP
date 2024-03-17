@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import cn.mercury9.roanews.data.NewsUiState
 import cn.mercury9.roanews.data.model.NewsInfo
 import cn.mercury9.roanews.ui.screen.newslist.ErrorLoadingNewsListScreen
 import cn.mercury9.roanews.ui.screen.newslist.LoadingNewsListScreen

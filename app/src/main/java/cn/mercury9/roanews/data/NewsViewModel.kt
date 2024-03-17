@@ -1,4 +1,4 @@
-package cn.mercury9.roanews.ui.screen
+package cn.mercury9.roanews.data
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -51,20 +51,19 @@ class NewsViewModel(
 //        }
     }
 
-    fun getNewsList() {
-        viewModelScope.launch {
-            newsUiState = NewsUiState.LoadingNewsList
-            newsUiState = NewsUiState.SuccessLoadNewsList(application.container.newsInfoList)
-        }
-    }
-
     fun loadNewsList(refreshState: SwipeRefreshState? = null) {
         viewModelScope.launch {
             Log.i("load_data", "Loading News List")
-            application.container.newsInfoList = newsInfoRepo.getNewsList()
-            getNewsList()
-            if (refreshState != null) {
-                refreshState.isRefreshing = false
+            try {
+                newsUiState = NewsUiState.LoadingNewsList
+                application.container.newsInfoList = newsInfoRepo.getNewsList()
+                newsUiState = NewsUiState.SuccessLoadNewsList(application.container.newsInfoList)
+            } catch (e: Exception) {
+                newsUiState = NewsUiState.ErrorLoadingNewsList(e)
+            } finally {
+                if (refreshState != null) {
+                    refreshState.isRefreshing = false
+                }
             }
         }
     }
@@ -83,10 +82,31 @@ class NewsViewModel(
             newsContentState = try {
                 val content =
                     application.container.newsContentMap[target]
-                        ?: newsContentRepo.getNewsContent(target)
+                    ?: run {
+                        val r = newsContentRepo.getNewsContent(target)
+                        application.container.newsContentMap[target] = r
+                        r
+                    }
                 NewsContentState.SuccessLoadNewsContent(content)
             } catch (e: Exception) {
                 NewsContentState.ErrorLoadingNewsContent(e)
+            }
+        }
+    }
+
+    fun loadNewsContent(refreshState: SwipeRefreshState? = null, target: String) {
+        viewModelScope.launch {
+            newsContentState = NewsContentState.LoadingNewsContent
+            newsContentState = try {
+                val content = newsContentRepo.getNewsContent(target)
+                application.container.newsContentMap[target] = content
+                NewsContentState.SuccessLoadNewsContent(content)
+            } catch (e: Exception) {
+                NewsContentState.ErrorLoadingNewsContent(e)
+            } finally {
+                if (refreshState != null) {
+                    refreshState.isRefreshing = false
+                }
             }
         }
     }
