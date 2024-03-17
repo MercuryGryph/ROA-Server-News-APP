@@ -25,7 +25,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun HomeScreen(
     newsUiState: NewsUiState,
     refreshNewsList: (SwipeRefreshState) -> Unit,
-    onClickNews: (String) -> Unit,
+    onClickNews: (NewsInfo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val refreshState = rememberSwipeRefreshState(isRefreshing = false)
@@ -42,7 +42,7 @@ fun HomeScreen(
             is NewsUiState.SuccessLoadNewsList ->
                 NewsListScreen(
                     newsUiState = newsUiState,
-                    onClickNews = {target: String -> onClickNews(target)},
+                    onClickNews = {target: NewsInfo -> onClickNews(target)},
                     modifier = modifier
                 )
             NewsUiState.LoadingNewsList ->
