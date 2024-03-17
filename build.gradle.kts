@@ -4,3 +4,4 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     kotlin("plugin.serialization") version "1.9.0"
 }
+val defaultVersionCode by extra(1.1)

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,6 +32,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RoaNewsContentPage(
+    refreshState: SwipeRefreshState,
     navController: NavController,
     newsViewModel: NewsViewModel
 ) {
@@ -50,13 +52,14 @@ fun RoaNewsContentPage(
         NewsScreen(
             target = newsInfo,
             newsContentState = newsViewModel.newsContentState,
+            refreshState = refreshState,
             refreshNewsContent = { refreshState: SwipeRefreshState ->
                 Log.i(null, "Refresh News List")
                 newsViewModel.loadNewsContent(refreshState, newsInfo.href)
             },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 60.dp)
+                .padding(top = 65.dp)
         )
     }
 }
@@ -65,6 +68,7 @@ fun RoaNewsContentPage(
 @Composable
 fun RoaNewsContentTopBar(
     title: String,
+    modifier: Modifier = Modifier,
     onClickNavIcon: () -> Unit = {}
 ) {
     TopAppBar(
@@ -94,7 +98,9 @@ fun RoaNewsContentTopBar(
                 modifier = Modifier
                     .wrapContentSize()
             )
-        }
+        },
+        modifier = modifier
+            .height(65.dp)
     )
 }
 

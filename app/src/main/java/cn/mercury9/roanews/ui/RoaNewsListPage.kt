@@ -3,6 +3,7 @@ package cn.mercury9.roanews.ui
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -30,6 +31,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoaNewsListPage(
+    refreshState: SwipeRefreshState,
     navController: NavController,
     newsViewModel: NewsViewModel
 ) {
@@ -42,6 +44,7 @@ fun RoaNewsListPage(
         }
     ) {
         HomeScreen(
+            refreshState = refreshState,
             newsUiState = newsViewModel.newsUiState,
             refreshNewsList = { refreshState: SwipeRefreshState ->
                 Log.i(null, "Refresh News List")
@@ -53,7 +56,7 @@ fun RoaNewsListPage(
             },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 60.dp)
+                .padding(top = 65.dp)
         )
     }
 }
@@ -74,7 +77,8 @@ fun RoaNewsTopBar(
             MaterialTheme.colorScheme.onPrimary
         ),
         scrollBehavior = scrollBehavior,
-        modifier = modifier,
+        modifier = modifier
+            .height(65.dp),
         title = {
             Text(
                 text = stringResource(id = R.string.app_name),

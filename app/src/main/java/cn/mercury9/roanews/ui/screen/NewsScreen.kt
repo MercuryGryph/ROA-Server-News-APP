@@ -11,16 +11,15 @@ import cn.mercury9.roanews.ui.screen.newscontent.LoadingNewsContentScreen
 import cn.mercury9.roanews.ui.screen.newscontent.NewsContentScreen
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun NewsScreen(
     target: NewsInfo,
     newsContentState: NewsContentState,
+    refreshState: SwipeRefreshState,
     refreshNewsContent: (SwipeRefreshState) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val refreshState = rememberSwipeRefreshState(isRefreshing = false)
     val scrollState = rememberScrollState()
 
     SwipeRefresh(

@@ -20,16 +20,15 @@ import cn.mercury9.roanews.ui.screen.newslist.NewsListScreen
 import cn.mercury9.roanews.ui.theme.RoaNewsTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun HomeScreen(
     newsUiState: NewsUiState,
+    refreshState: SwipeRefreshState,
     refreshNewsList: (SwipeRefreshState) -> Unit,
     onClickNews: (NewsInfo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val refreshState = rememberSwipeRefreshState(isRefreshing = false)
     val scrollState = rememberScrollState()
 
     SwipeRefresh(
@@ -78,11 +77,13 @@ fun PreviewHomeScreen() {
     }
 
     RoaNewsTheme {
+        val refreshState = SwipeRefreshState(isRefreshing = false)
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
             HomeScreen(
                 newsUiState = newsUiState,
+                refreshState = refreshState,
                 refreshNewsList = {
                     newsUiState = newsUiStateSuccess
                 },
