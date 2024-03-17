@@ -69,6 +69,10 @@ class NewsViewModel(
         }
     }
 
+    fun setNewsContentTarget(target: String) {
+        application.curlNewsContent = target
+    }
+
     fun getNewsContent(target: String) {
         viewModelScope.launch {
             newsContentState = NewsContentState.LoadingNewsContent

@@ -30,6 +30,9 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 @Composable
 fun RoaNewsApp() {
     val scoreBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val newsViewModel: NewsViewModel = viewModel(
+        factory = NewsViewModel.Factory
+    )
     Scaffold(
         modifier = Modifier
             .nestedScroll(scoreBehavior.nestedScrollConnection),
@@ -43,14 +46,14 @@ fun RoaNewsApp() {
                 .fillMaxSize()
                 .padding(top = 70.dp)
         ) {
-            val newsViewModel: NewsViewModel = viewModel(
-                factory = NewsViewModel.Factory
-            )
             HomeScreen(
                 newsUiState = newsViewModel.newsUiState,
                 refreshNewsList = { refreshState: SwipeRefreshState ->
                     Log.i(null, "Refresh News List")
                     newsViewModel.loadNewsList(refreshState)
+                },
+                onClickNews = {target: String ->
+                    newsViewModel.setNewsContentTarget(target)
                 },
                 modifier = Modifier
                     .fillMaxSize()

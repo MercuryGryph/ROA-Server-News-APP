@@ -1,6 +1,7 @@
 package cn.mercury9.roanews.ui.screen.newslist
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -22,6 +23,7 @@ import cn.mercury9.roanews.ui.theme.RoaNewsTheme
 @Composable
 fun NewsListScreen(
     newsUiState: NewsUiState.SuccessLoadNewsList,
+    onClickNews: (String) -> Unit,
     modifier: Modifier
 ) {
     LazyColumn(
@@ -33,7 +35,9 @@ fun NewsListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-            )
+            ) { target: String ->
+                onClickNews(target)
+            }
         }
     }
 }
@@ -41,7 +45,8 @@ fun NewsListScreen(
 @Composable
 fun NewsInfoRow(
     newsInfo: NewsInfo,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit
 ) {
     Surface(
         color = MaterialTheme.colorScheme.primaryContainer,
@@ -49,6 +54,9 @@ fun NewsInfoRow(
         shadowElevation = 6.dp,
         modifier = modifier
             .heightIn(50.dp)
+            .clickable {
+                onClick(newsInfo.href)
+            }
     ) {
         Text(
             text = newsInfo.title,
@@ -69,7 +77,7 @@ fun PreviewNewsInfoRow() {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-        )
+        ){}
     }
 }
 
@@ -90,6 +98,7 @@ fun PreviewNewsListScreen() {
         ) {
             NewsListScreen(
                 newsUiState = NewsUiState.SuccessLoadNewsList(newsList),
+                onClickNews = {},
                 modifier = Modifier
                     .fillMaxSize()
             )
