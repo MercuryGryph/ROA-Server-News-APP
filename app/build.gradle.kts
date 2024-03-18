@@ -12,8 +12,8 @@ android {
         applicationId = "cn.mercury9.roanews"
         minSdk = 30
         targetSdk = 34
-        versionCode = 101
-        versionName = "1.1"
+        versionCode = 103
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.accompanist.swiperefresh)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.markdown)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

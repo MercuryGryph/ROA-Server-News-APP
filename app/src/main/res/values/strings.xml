@@ -6,4 +6,5 @@
     <string name="back">Back</string>
     <string name="fail_load_news_content">Failed to load news \"%s\"</string>
     <string name="loading_news_content">Loading news \"%s\" …</string>
+    <string name="html_style_markdown" translatable="false">&lt;style&gt;\n* {\n    color: ${font_color_1};\n    background-color: ${bg_color};\n}\n\ntime {\n    font-style: italic;\n    color: ${font_color_time};\n}\n\nimg {\n    width: 100%;\n}\n\na {\n  border-bottom: 2px dotted ${color_p};\n  text-decoration: none;\n}\n\nblockquote {\n  margin-right: 0;\n  margin-left: 1.4em;\n  border-left: 0.2em solid ${color_p};\n  padding-left: 0.4rem;\n}\n\npre {\n  border: 1px solid ${font_color_code};\n  border-radius: 1rem;\n  background-color: ${bg_color_code};\n  padding: 1rem;\n  overflow-x: scroll;\n  color: ${font_color_code};\n}\n\ncode {\n  background-color: ${bg_color_code};\n  color: ${font_color_code};\n}\n\np,b,i {\n  line-height: 1.5em;\n}\n\npre code {\n  padding: 0 !important;\n}\n&lt;/style&gt;</string>
 </resources>
